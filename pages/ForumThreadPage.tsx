@@ -36,18 +36,18 @@ const ForumThreadPage: React.FC = () => {
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
                 <Card className="mb-6">
                     <div className="p-6">
-                        <h1 className="text-3xl font-bold mb-4">{thread.title}</h1>
+                        <h1 className="text-3xl font-bold mb-4 text-white">{thread.title}</h1>
                         <div className="flex items-center gap-3 text-sm text-text-secondary border-b border-border pb-4 mb-4">
                             <img src={thread.author.avatar} alt={thread.author.mocaId} className="w-8 h-8 rounded-full" />
                             <Link to={`/users/${thread.author.mocaId}`} className="font-semibold text-text-primary hover:underline">{thread.author.mocaId}</Link>
                             <span>&bull;</span>
                             <span>Posted {thread.timestamp}</span>
                         </div>
-                        <p className="leading-relaxed">{thread.content}</p>
+                        <p className="leading-relaxed text-text-primary">{thread.content}</p>
                     </div>
                 </Card>
 
-                <h2 className="text-2xl font-bold mb-4">{thread.replies.length} Replies</h2>
+                <h2 className="text-2xl font-bold mb-4 text-white">{thread.replies.length} Replies</h2>
 
                 <div className="space-y-4 mb-8">
                     {thread.replies.map(reply => (
@@ -59,7 +59,7 @@ const ForumThreadPage: React.FC = () => {
                                         <Link to={`/users/${reply.author.mocaId}`} className="font-semibold text-text-primary hover:underline">{reply.author.mocaId}</Link>
                                         <span className="text-text-secondary">{reply.timestamp}</span>
                                     </div>
-                                    <p className="mt-1">{reply.content}</p>
+                                    <p className="mt-1 text-text-primary">{reply.content}</p>
                                 </div>
                             </div>
                         </Card>
@@ -68,12 +68,12 @@ const ForumThreadPage: React.FC = () => {
 
                 <Card>
                     <div className="p-6">
-                        <h3 className="text-xl font-semibold mb-4">Your Reply</h3>
+                        <h3 className="text-xl font-semibold mb-4 text-white">Your Reply</h3>
                         <form>
                             <textarea
                                 rows={5}
                                 placeholder="Write your reply here..."
-                                className="w-full bg-secondary border border-border rounded-lg p-3 focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent/50 transition-colors"
+                                className="w-full bg-secondary border border-border rounded-lg p-3 focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent/50 transition-colors text-white placeholder-gray-400"
                             />
                             <div className="mt-4 flex justify-end">
                                 <Button>

@@ -48,7 +48,7 @@ const ForumCategoryPage: React.FC = () => {
         <ChevronLeft size={20} />
         Back to Forums
       </button>
-      <h1 className="text-3xl font-bold mb-6 capitalize">{categoryName} Threads</h1>
+      <h1 className="text-3xl font-bold mb-6 capitalize text-white">{categoryName} Threads</h1>
       
       {isLoading ? (
         <div className="space-y-4">
@@ -62,17 +62,17 @@ const ForumCategoryPage: React.FC = () => {
                 <Card className="p-4 hover:border-accent transition-colors duration-200">
                   <div className="flex items-center justify-between">
                     <div>
-                      <h2 className="text-lg font-semibold text-text-primary">{thread.title}</h2>
+                      <h2 className="text-lg font-semibold text-white">{thread.title}</h2>
                       <p className="text-sm text-text-secondary">by {thread.author.mocaId}</p>
                     </div>
                     <div className="flex items-center gap-6 text-sm text-text-secondary text-right">
                         <div className="flex items-center gap-2">
-                            <MessageSquare size={16} />
-                            <span>{thread.replies}</span>
+                            <MessageSquare size={16} className="text-white" />
+                            <span className="text-white">{thread.replies}</span>
                         </div>
                         <div className="flex items-center gap-2">
-                            <Clock size={16} />
-                            <span>{thread.lastActivity}</span>
+                            <Clock size={16} className="text-white" />
+                            <span className="text-white">{thread.lastActivity}</span>
                         </div>
                     </div>
                   </div>
