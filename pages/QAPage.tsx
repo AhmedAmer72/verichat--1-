@@ -64,12 +64,12 @@ const QAPage: React.FC = () => {
                                 <div className="flex items-start gap-6">
                                     <div className="text-center flex-shrink-0 w-20">
                                         <div className="flex items-center justify-center gap-1">
-                                            <ArrowUp size={16} />
+                                            <ArrowUp size={16} className="text-white" />
                                             <span className="text-lg font-bold text-white">{q.votes}</span>
                                         </div>
                                         <p className="text-xs text-white">votes</p>
                                         <div className="flex items-center justify-center gap-1 mt-2">
-                                            <MessageSquare size={16} />
+                                            <MessageSquare size={16} className="text-white" />
                                             <span className="text-lg font-bold text-white">{q.answers}</span>
                                         </div>
                                         <p className="text-xs text-white">answers</p>
