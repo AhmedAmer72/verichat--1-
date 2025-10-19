@@ -54,7 +54,35 @@ export interface QAQuestion {
     tags: string[];
 }
 
-export const mockUserProfiles: Record<string, UserProfile> = {};
+export const mockUserProfiles: Record<string, UserProfile> = {
+    'vitalik.moca': {
+        mocaId: 'vitalik.moca',
+        avatar: 'https://i.pravatar.cc/150?u=vitalik',
+        joinedDate: 'Jan 1, 2024',
+        reputation: 1337,
+        answersProvided: 42,
+        questionsAsked: 5,
+        bio: 'Co-founder of Ethereum. Interested in cryptography, economics, and decentralized systems.'
+    },
+    'alice.moca': {
+        mocaId: 'alice.moca',
+        avatar: 'https://i.pravatar.cc/150?u=alice',
+        joinedDate: 'Feb 15, 2024',
+        reputation: 256,
+        answersProvided: 15,
+        questionsAsked: 10,
+        bio: 'Smart contract developer and security enthusiast.'
+    },
+    'bob.moca': {
+        mocaId: 'bob.moca',
+        avatar: 'https://i.pravatar.cc/150?u=bob',
+        joinedDate: 'Mar 22, 2024',
+        reputation: 128,
+        answersProvided: 8,
+        questionsAsked: 12,
+        bio: 'Exploring the possibilities of Web3 and DAOs.'
+    }
+};
 
 export const mockChatChannels: ChatChannel[] = [
     { id: 'c1', name: '#general', isGated: false },
@@ -78,7 +106,12 @@ export const mockForumCategories: ForumCategory[] = [
     { id: 'technical', name: 'Technical Support', description: 'Get help with smart contracts, dApps, and more.', threads: 250, messages: 3200, isGated: false },
 ];
 
-export const mockForumThreads: ForumThread[] = [];
+export const mockForumThreads: ForumThread[] = [
+    { id: 't1', categoryId: 'general', title: 'Favorite upcoming features?', author: mockUserProfiles['alice.moca'], replies: 3, lastActivity: '1 day ago' },
+    { id: 't2', categoryId: 'general', title: 'What are you building?', author: mockUserProfiles['bob.moca'], replies: 15, lastActivity: '2 hours ago' },
+    { id: 't3', categoryId: 'proposals', title: 'MIP-42: New Reputation System', author: mockUserProfiles['vitalik.moca'], replies: 42, lastActivity: '5 min ago' },
+    { id: 't4', categoryId: 'technical', title: 'Struggling with gas optimization', author: mockUserProfiles['bob.moca'], replies: 8, lastActivity: '6 hours ago' },
+];
 
 export const mockQuestions: QAQuestion[] = [
     { id: 'q1', title: 'How to handle re-entrancy in a Solidity smart contract?', author: 'solidity-god.moca', votes: 128, answers: 2, tags: ['Solidity', 'Security'] },

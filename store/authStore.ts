@@ -10,12 +10,14 @@ interface AuthState {
   token: string | null;
   isLoading: boolean;
   needsUsernameSetup: boolean;
+  mfaModalDismissed: boolean;
   checkLogin: () => Promise<void>;
   login: (navigate: (path: string) => void) => Promise<void>;
   logout: () => void;
   setupMfa: () => Promise<void>;
   updateUser: (data: Partial<AirUserDetails>) => void;
   setUsername: (username: string) => void;
+  dismissMfaModal: () => void;
 }
 
 export const useAuthStore = create<AuthState>((set, get) => ({
@@ -26,6 +28,7 @@ export const useAuthStore = create<AuthState>((set, get) => ({
   token: null,
   isLoading: false,
   needsUsernameSetup: false,
+  mfaModalDismissed: false,
   checkLogin: async () => {
     const airService = getAirService();
     try {
@@ -33,6 +36,7 @@ export const useAuthStore = create<AuthState>((set, get) => ({
       if (userInfo) {
         const token = await airService.getAccessToken();
         const hasCustomUsername = localStorage.getItem(`username_${userInfo.user.id}`);
+        const mfaDismissed = localStorage.getItem(`mfa_dismissed_${userInfo.user.id}`) === 'true';
         set({
           isAuthenticated: true,
           user: userInfo,
@@ -40,6 +44,7 @@ export const useAuthStore = create<AuthState>((set, get) => ({
           isInitializing: false,
           isMfaSetup: userInfo.user.isMFASetup || false,
           needsUsernameSetup: !hasCustomUsername && !userInfo.airId?.name,
+          mfaModalDismissed: mfaDismissed,
         });
         console.log('User is already logged in.');
       } else {
@@ -77,6 +82,7 @@ export const useAuthStore = create<AuthState>((set, get) => ({
         
         if (userInfo) {
           const hasCustomUsername = localStorage.getItem(`username_${userInfo.user.id}`);
+          const mfaDismissed = localStorage.getItem(`mfa_dismissed_${userInfo.user.id}`) === 'true';
           set({
             isAuthenticated: true,
             user: userInfo,
@@ -84,6 +90,7 @@ export const useAuthStore = create<AuthState>((set, get) => ({
             isLoading: false,
             isMfaSetup: userInfo.user.isMFASetup || false,
             needsUsernameSetup: !hasCustomUsername && !userInfo.airId?.name,
+            mfaModalDismissed: mfaDismissed,
           });
           navigate('/dashboard');
         } else {
@@ -115,6 +122,7 @@ export const useAuthStore = create<AuthState>((set, get) => ({
       isLoading: false,
       isMfaSetup: false,
       needsUsernameSetup: false,
+      mfaModalDismissed: false,
     });
   },
   setupMfa: async () => {
@@ -144,6 +152,13 @@ export const useAuthStore = create<AuthState>((set, get) => ({
     if (state.user) {
       localStorage.setItem(`username_${state.user.user.id}`, username);
       set({ needsUsernameSetup: false });
+    }
+  },
+  dismissMfaModal: () => {
+    const state = get();
+    if (state.user) {
+      localStorage.setItem(`mfa_dismissed_${state.user.user.id}`, 'true');
+      set({ mfaModalDismissed: true });
     }
   },
 }));
