@@ -40,6 +40,18 @@ app.use(cors({
   }
 }));
 
+// Root route
+app.get('/', (req, res) => {
+  res.json({ 
+    message: 'VeriChat Backend API', 
+    status: 'running',
+    endpoints: {
+      jwt: '/api/generate-jwt',
+      jwks: '/.well-known/jwks.json'
+    }
+  });
+});
+
 const keyId = 'verichat-key-v2';
 
 // Endpoint to serve the JWKS
