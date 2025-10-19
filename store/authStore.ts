@@ -71,7 +71,7 @@ export const useAuthStore = create<AuthState>((set, get) => ({
 
       // Step 2: Call AIR Kit login with the fetched token
       const airService = getAirService();
-      const result: AirLoginResult = await airService.login({ authToken });
+      const result: AirLoginResult = await airService.login({ authToken: authToken });
 
       // Step 3: Check if login was truly successful
       if (result && result.token) {
