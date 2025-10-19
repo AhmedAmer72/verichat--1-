@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>VeriChat</title>
+    <script type="importmap">
+{
+  "imports": {
+    "react": "https://aistudiocdn.com/react@^19.2.0",
+    "react-dom/client": "https://aistudiocdn.com/react-dom@^19.2.0/client",
+    "react-router-dom": "https://aistudiocdn.com/react-router-dom@^7.9.4",
+    "react/": "https://aistudiocdn.com/react@^19.2.0/",
+    "framer-motion": "https://aistudiocdn.com/framer-motion@^12.23.24",
+    "zustand": "https://aistudiocdn.com/zustand@^5.0.8",
+    "lucide-react": "https://aistudiocdn.com/lucide-react@^0.546.0",
+    "clsx": "https://aistudiocdn.com/clsx@^2.1.1",
+    "tailwind-merge": "https://aistudiocdn.com/tailwind-merge@^3.3.1",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/"
+  }
+}
+</script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0D1117;
+            background-size: 400% 400%;
+            background-image: linear-gradient(-45deg, #0d1117, #161b22, #0d1117, #1c2128);
+            animation: gradient 15s ease infinite;
+        }
+
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .text-glow {
+            text-shadow: 0 0 8px rgba(34, 211, 238, 0.3), 0 0 20px rgba(34, 211, 238, 0.2);
+        }
+        
+        .animate-pulse-glow {
+            animation: pulse-glow 2s infinite ease-in-out;
+        }
+        
+        @keyframes pulse-glow {
+            0%, 100% {
+                transform: scale(1);
+                box-shadow: 0 0 15px rgba(34, 211, 238, 0.3), 0 0 30px rgba(34, 211, 238, 0.2);
+            }
+            50% {
+                transform: scale(1.05);
+                box-shadow: 0 0 25px rgba(34, 211, 238, 0.5), 0 0 50px rgba(34, 211, 238, 0.4);
+            }
+        }
+        
+        .bg-size-200 {
+            background-size: 200% auto;
+        }
+        .bg-pos-0 {
+            background-position: 0% center;
+        }
+        .bg-pos-100 {
+            background-position: 100% center;
+        }
+    </style>
+    <script>
+        tailwind.config = {
+          theme: {
+            extend: {
+              colors: {
+                background: '#0D1117',
+                secondary: '#161B22',
+                border: '#30363D',
+                accent: '#22d3ee', 
+                text: {
+                  primary: '#C9D1D9',
+                  secondary: '#8B949E',
+                },
+              },
+              animation: {
+                shimmer: 'shimmer 2s linear infinite',
+              },
+              keyframes: {
+                shimmer: {
+                  '0%': { transform: 'translateX(-100%)' },
+                  '100%': { transform: 'translateX(100%)' },
+                },
+              },
+            },
+          }
+        }
+    </script>
+<link rel="stylesheet" href="/index.css">
+</head>
+<body>
+    <div id="root"></div>
+    <script type="module" src="./index.tsx"></script>
+<script type="module" src="/index.tsx"></script>
+</body>
+</html>

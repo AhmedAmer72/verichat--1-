@@ -1,0 +1,5 @@
+{
+  "name": "Verichat",
+  "description": "An interactive playground demonstrating the core features of the VeriChat Protocol, including credential-gated chats, forums, and Q&A, built with a sophisticated dark mode UI, advanced animations, and a scalable React architecture.",
+  "requestFramePermissions": []
+}
