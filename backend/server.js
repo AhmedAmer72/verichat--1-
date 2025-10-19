@@ -45,12 +45,17 @@ const keyId = 'verichat-key-v2';
 // Endpoint to serve the JWKS
 app.get('/.well-known/jwks.json', async (req, res) => {
   try {
-    const publicKeyPath = path.join(__dirname, 'public.key');
-    if (!fs.existsSync(publicKeyPath)) {
-      console.error('FATAL: public.key not found.');
-      return res.status(500).json({ error: 'Server configuration error: public key not found.' });
+    let publicKeyPem;
+    if (process.env.PUBLIC_KEY_CONTENT) {
+      publicKeyPem = process.env.PUBLIC_KEY_CONTENT;
+    } else {
+      const publicKeyPath = path.join(__dirname, 'public.key');
+      if (!fs.existsSync(publicKeyPath)) {
+        console.error('FATAL: public.key not found and PUBLIC_KEY_CONTENT not set.');
+        return res.status(500).json({ error: 'Server configuration error: public key not found.' });
+      }
+      publicKeyPem = fs.readFileSync(publicKeyPath, 'utf8');
     }
-    const publicKeyPem = fs.readFileSync(publicKeyPath, 'utf8');
     
     const publicKey = await jose.importSPKI(publicKeyPem, 'RS256');
     const jwk = await jose.exportJWK(publicKey);
@@ -75,12 +80,17 @@ app.get('/.well-known/jwks.json', async (req, res) => {
 app.get('/api/generate-jwt', (req, res) => {
   console.log('Request received for /api/generate-jwt');
   try {
-    const privateKeyPath = path.join(__dirname, 'private.key');
-    if (!fs.existsSync(privateKeyPath)) {
-      console.error('FATAL: private.key not found. Please generate keys and place it in the /backend directory.');
-      return res.status(500).json({ error: 'Server configuration error: signing key not found.' });
+    let privateKey;
+    if (process.env.PRIVATE_KEY_CONTENT) {
+      privateKey = process.env.PRIVATE_KEY_CONTENT;
+    } else {
+      const privateKeyPath = path.join(__dirname, 'private.key');
+      if (!fs.existsSync(privateKeyPath)) {
+        console.error('FATAL: private.key not found and PRIVATE_KEY_CONTENT not set.');
+        return res.status(500).json({ error: 'Server configuration error: signing key not found.' });
+      }
+      privateKey = fs.readFileSync(privateKeyPath);
     }
-    const privateKey = fs.readFileSync(privateKeyPath);
 
     // This must be your actual Partner ID.
     // For this to work, you must start the server with the environment variable set:
