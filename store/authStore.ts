@@ -85,7 +85,7 @@ export const useAuthStore = create<AuthState>((set, get) => ({
             isMfaSetup: userInfo.user.isMFASetup || false,
             needsUsernameSetup: !hasCustomUsername && !userInfo.airId?.name,
           });
-          navigate('/chat');
+          navigate('/dashboard');
         } else {
           // Login succeeded but couldn't get user info - this is an error state
           console.error('Login succeeded but could not fetch user info');
