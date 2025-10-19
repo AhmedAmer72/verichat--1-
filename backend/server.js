@@ -7,13 +7,32 @@ const cors = require('cors');
 const jose = require('jose');
 
 const app = express();
-const port = 4000;
+const port = process.env.PORT || 4000;
 
 // IMPORTANT: In production, you should restrict this to your actual frontend domain.
-const allowedOrigins = ['http://localhost:3000', 'https://localhost:3000', 'http://192.168.137.1:3000', 'https://172.28.9.26:3000'];
+const allowedOrigins = [
+  'http://localhost:3000', 
+  'https://localhost:3000', 
+  'http://192.168.137.1:3000', 
+  'https://172.28.9.26:3000',
+  'https://verichat-1.vercel.app', // Your actual Vercel URL
+  /\.vercel\.app$/ // Allow all Vercel preview deployments
+];
 app.use(cors({ 
   origin: function (origin, callback) {
-    if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+    if (!origin) {
+      callback(null, true);
+      return;
+    }
+    
+    const isAllowed = allowedOrigins.some(allowedOrigin => {
+      if (typeof allowedOrigin === 'string') {
+        return allowedOrigin === origin;
+      }
+      return allowedOrigin.test(origin);
+    });
+    
+    if (isAllowed) {
       callback(null, true);
     } else {
       callback(new Error('Not allowed by CORS'));
@@ -95,7 +114,7 @@ app.get('/api/generate-jwt', (req, res) => {
   }
 });
 
-app.listen(port, () => {
-  console.log(`Backend server running at http://localhost:${port}`);
-  console.log(`JWKS endpoint available at http://localhost:${port}/.well-known/jwks.json`);
+app.listen(port, '0.0.0.0', () => {
+  console.log(`Backend server running on port ${port}`);
+  console.log(`JWKS endpoint available at /.well-known/jwks.json`);
 });

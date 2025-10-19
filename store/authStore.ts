@@ -56,7 +56,7 @@ export const useAuthStore = create<AuthState>((set, get) => ({
     try {
       // Step 1: Fetch the Partner JWT from the backend
       console.log('Fetching Partner JWT from backend...');
-      const response = await fetch('http://localhost:4000/api/generate-jwt');
+      const response = await fetch('https://your-ngrok-url.ngrok.io/api/generate-jwt');
       if (!response.ok) {
         const errorData = await response.json();
         throw new Error(`Failed to fetch JWT: ${errorData.error || response.statusText}`);
