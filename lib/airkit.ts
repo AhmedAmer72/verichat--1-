@@ -18,7 +18,7 @@ export const initAirService = async (): Promise<void> => {
     await service.init({
       buildEnv: BUILD_ENV.SANDBOX,
       enableLogging: import.meta.env.DEV,
-      skipRehydration: false,
+      skipRehydration: false
     });
     
     airService = service;
@@ -83,6 +83,12 @@ export const issueXPCredential = async (points: number, reason: string): Promise
   try {
     const service = getAirService();
     const issuerDID = import.meta.env.VITE_AIRKIT_ISSUER_DID;
+    console.log('🔍 Environment check - Issuer DID:', issuerDID);
+    console.log('🔍 All env vars:', {
+      partnerId: import.meta.env.VITE_AIRKIT_PARTNER_ID,
+      issuerDid: import.meta.env.VITE_AIRKIT_ISSUER_DID,
+      verifierDid: import.meta.env.VITE_AIRKIT_VERIFIER_DID
+    });
     console.log('✅ AIR Service obtained, Issuer DID:', issuerDID);
     
     // Generate Partner JWT for credential operations
