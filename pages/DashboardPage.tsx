@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
 import Card from '../components/ui/Card';
 import { MessageSquare, LayoutList, HelpCircle } from 'lucide-react';
+import CredentialTester from '../components/shared/CredentialTester';
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -90,6 +91,12 @@ const DashboardPage: React.FC = () => {
           </motion.div>
         ))}
       </motion.div>
+      
+      {/* Credential Testing Section */}
+      <div className="mt-12">
+        <h2 className="text-2xl font-bold mb-6 text-white">AIR Kit Integration Testing</h2>
+        <CredentialTester />
+      </div>
     </div>
   );
 };

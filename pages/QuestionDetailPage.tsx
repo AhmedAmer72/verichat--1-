@@ -1,10 +1,11 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ChevronLeft, ArrowUp, CheckCircle, Send } from 'lucide-react';
 import Card from '../components/ui/Card';
 import Button from '../components/ui/Button';
+import { issueXPCredential } from '../lib/airkit';
 
 // Mock data
 const mockQuestionDetails = {
@@ -35,8 +36,32 @@ const mockQuestionDetails = {
 const QuestionDetailPage: React.FC = () => {
     const { questionId } = useParams<{ questionId: string }>();
     const navigate = useNavigate();
+    const [answerText, setAnswerText] = useState('');
+    const [isSubmitting, setIsSubmitting] = useState(false);
     // In a real app, you would fetch question details based on questionId
     const question = mockQuestionDetails;
+
+    const handleSubmitAnswer = async (e: React.FormEvent) => {
+        e.preventDefault();
+        if (!answerText.trim()) return;
+        
+        setIsSubmitting(true);
+        try {
+            // Award XP for providing an answer
+            await issueXPCredential(10, 'Answered a question');
+            
+            // In a real app, you would submit the answer to your backend
+            console.log('Answer submitted:', answerText);
+            
+            // Reset form
+            setAnswerText('');
+            alert('Answer submitted! You earned 10 XP points.');
+        } catch (error) {
+            console.error('Failed to submit answer:', error);
+        } finally {
+            setIsSubmitting(false);
+        }
+    };
 
     return (
         <div className="max-w-4xl mx-auto">
@@ -86,16 +111,19 @@ const QuestionDetailPage: React.FC = () => {
                 <Card>
                     <div className="p-6">
                         <h3 className="text-xl font-semibold mb-4 text-white">Your Answer</h3>
-                        <form>
+                        <form onSubmit={handleSubmitAnswer}>
                             <textarea
                                 rows={6}
-                                placeholder="Provide a detailed answer..."
+                                value={answerText}
+                                onChange={(e) => setAnswerText(e.target.value)}
+                                placeholder="Provide a detailed answer... (Earn 10 XP for helpful answers!)"
                                 className="w-full bg-secondary border border-border rounded-lg p-3 focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent/50 transition-colors text-white placeholder-gray-400"
+                                disabled={isSubmitting}
                             />
                             <div className="mt-4 flex justify-end">
-                                <Button>
+                                <Button type="submit" disabled={isSubmitting || !answerText.trim()}>
                                     <Send size={16} className="mr-2" />
-                                    Post Your Answer
+                                    {isSubmitting ? 'Submitting...' : 'Post Your Answer (+10 XP)'}
                                 </Button>
                             </div>
                         </form>

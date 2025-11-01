@@ -70,7 +70,13 @@ const ChatPage: React.FC = () => {
 
   return (
     <div className="flex h-[calc(100vh-160px)] rounded-xl border border-border bg-secondary/50 overflow-hidden">
-      <CredentialModal isOpen={isVerifying} onClose={() => setIsVerifying(false)} onVerified={handleVerificationComplete} />
+      <CredentialModal 
+        isOpen={isVerifying} 
+        onClose={() => setIsVerifying(false)} 
+        onVerified={handleVerificationComplete}
+        credentialType="premium"
+        title="Verifying Premium Access"
+      />
       <AddChatModal isOpen={isAddModalOpen} onClose={() => setIsAddModalOpen(false)} onAddChannel={handleAddChannel} />
       
       {/* Sidebar */}

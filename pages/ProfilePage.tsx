@@ -1,13 +1,25 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useAuth } from '../hooks/useAuth';
 import Card from '../components/ui/Card';
-import { User, Mail, Smile, Camera } from 'lucide-react';
+import { User, Mail, Smile, Camera, Award } from 'lucide-react';
 import UsernameSetupModal from '../components/shared/UsernameSetupModal';
+import { getUserXP } from '../lib/airkit';
 
 const ProfilePage: React.FC = () => {
   const { user, needsUsernameSetup, setUsername } = useAuth();
   const [showUsernameModal, setShowUsernameModal] = useState(needsUsernameSetup);
+  const [userXP, setUserXP] = useState(0);
+
+  useEffect(() => {
+    const loadUserXP = async () => {
+      const xp = await getUserXP();
+      setUserXP(xp);
+    };
+    if (user) {
+      loadUserXP();
+    }
+  }, [user]);
 
   if (!user) {
     return <div>Loading Profile...</div>;
@@ -96,6 +108,16 @@ const ProfilePage: React.FC = () => {
               <div className="relative">
                 <User className="absolute left-3 top-1/2 -translate-y-1/2 text-text-secondary" size={20} />
                 <input type="text" id="mocaId" value={mocaId} disabled className="w-full bg-secondary border border-border rounded-lg p-3 pl-10 disabled:opacity-70 text-white" />
+              </div>
+            </div>
+            {/* XP Points */}
+            <div>
+              <label htmlFor="xp" className="block text-sm font-medium text-text-secondary mb-1">
+                Reputation Points (XP)
+              </label>
+              <div className="relative">
+                <Award className="absolute left-3 top-1/2 -translate-y-1/2 text-accent" size={20} />
+                <input type="text" id="xp" value={`${userXP} XP`} disabled className="w-full bg-secondary border border-border rounded-lg p-3 pl-10 disabled:opacity-70 text-accent font-bold" />
               </div>
             </div>
           </div>
