@@ -32,7 +32,7 @@ const App: React.FC = () => {
 
   return (
     <AnimatePresence mode="wait">
-      <Routes location={location} key={location.pathname}>
+    <Routes location={location}>
         {!isAuthenticated ? (
           <>
             <Route path="/" element={<HomePage />} />
